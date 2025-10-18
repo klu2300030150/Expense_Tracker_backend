@@ -14,6 +14,8 @@ public class ExpenseRequest {
     @NotBlank(message = "Category is required")
     private String category;
     
+    private String subcategory;
+    
     private String description;
     
     @NotNull(message = "Date is required")

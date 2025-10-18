@@ -26,6 +26,9 @@ public class Expense {
     @Column(nullable = false)
     private String category;
     
+    @Column(name = "subcategory")
+    private String subcategory;
+    
     private String description;
     
     @Column(nullable = false)
