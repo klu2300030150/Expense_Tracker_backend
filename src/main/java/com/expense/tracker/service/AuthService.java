@@ -57,4 +57,13 @@ public class AuthService {
         return new AuthResponse(token, user.getId(), user.getFullName(), 
                                user.getEmail(), user.getCurrency());
     }
+
+    public SafeUser getSafeUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return new SafeUser(user.getId(), user.getFullName(), user.getEmail(), user.getPhoneNumber(), user.getCurrency());
+    }
+
+    // A simple projection type for safe responses
+    public record SafeUser(Long id, String fullName, String email, String phoneNumber, String currency) {}
 }

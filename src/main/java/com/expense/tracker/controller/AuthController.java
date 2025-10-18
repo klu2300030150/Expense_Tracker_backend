@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
     
     private final AuthService authService;
@@ -43,6 +42,16 @@ public class AuthController {
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid credentials");
+        }
+    }
+
+    // Secure endpoint: get user info by email (only safe fields). Requires JWT auth.
+    @GetMapping("/me")
+    public ResponseEntity<?> currentUser(@RequestParam String email) {
+        try {
+            return ResponseEntity.ok(authService.getSafeUserByEmail(email));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
 }
